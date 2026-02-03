@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>あなたの電子書籍に、世界に一つだけの「テーマソング」を</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;700;900&family=Noto+Sans+JP:wght@300;400;600;700;900&display=swap');
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Noto Sans JP', sans-serif; line-height: 1.8; color: #2c3e50; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        
+        .hero {
+            background: linear-gradient(135deg, rgba(26, 26, 46, 0.85) 0%, rgba(22, 33, 62, 0.9) 100%), 
+                        url('hero-background.png') center/cover;
+            color: white;
+            padding: 120px 20px 100px;
+            text-align: center;
+        }
+        .hero h1 {
+            font-family: 'Noto Serif JP', serif;
+            font-size: 3.2rem;
+            font-weight: 900;
+            margin-bottom: 30px;
+            text-shadow: 2px 2px 8px rgba(0,0,0,0.5);
+        }
+        .highlight { color: #f4a261; }
+        .hero-cta {
+            display: inline-block;
+            background: #e94560;
+            color: white;
+            padding: 22px 55px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-size: 1.35rem;
+            font-weight: 700;
+            margin-top: 30px;
+        }
+        
+        .delivery {
+            background: #f8f9fa;
+            padding: 80px 20px;
+        }
+        .delivery-box {
+            max-width: 700px;
+            margin: 0 auto;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 50px;
+            border-radius: 25px;
+            color: white;
+            text-align: center;
+        }
+        .delivery-title { font-size: 2.5rem; font-weight: 900; margin: 20px 0; }
+        
+        section { padding: 100px 20px; }
+        h2 {
+            font-family: 'Noto Serif JP', serif;
+            font-size: 2.8rem;
+            text-align: center;
+            margin-bottom: 60px;
+            position: relative;
+            padding-bottom: 25px;
+        }
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 5px;
+            background: #e94560;
+        }
+        
+        .problem { background: white; }
+        .problem-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 35px;
+        }
+        .problem-card {
+            background: #f8f9fa;
+            padding: 40px;
+            border-radius: 20px;
+        }
+        .problem-icon { font-size: 3.5rem; margin-bottom: 25px; }
+        
+        .solution {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        .solution h2 { color: white; }
+        .solution h2::after { background: white; }
+        .solution-features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 35px;
+        }
+        .feature-card {
+            background: rgba(255,255,255,0.15);
+            padding: 40px 30px;
+            border-radius: 20px;
+            text-align: center;
+        }
+        .feature-icon { font-size: 4rem; margin-bottom: 25px; }
+        
+        .examples { background: #f8f9fa; }
+        .example-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+            margin-bottom: 100px;
+        }
+        .example-video video {
+            width: 100%;
+            border-radius: 20px;
+            box-shadow: 0 15px 50px rgba(0,0,0,0.15);
+        }
+        
+        .timeline { background: white; }
+        .timeline-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        .timeline-card {
+            background: white;
+            padding: 40px 30px;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        .timeline-icon { font-size: 4rem; margin-bottom: 20px; }
+        
+        .chatwork { background: #f8f9fa; }
+        .chatwork-box {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 25px;
+            overflow: hidden;
+        }
+        .chatwork-header {
+            background: linear-gradient(135deg, #ff6b35 0%, #f7931e 100%);
+            color: white;
+            padding: 50px 40px;
+            text-align: center;
+        }
+        .chatwork-content { padding: 40px; }
+        .info-box {
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        .info-box.warning { background: #fff3cd; border-left: 4px solid #ffc107; }
+        .info-box.danger { background: #f8d7da; border-left: 4px solid #dc3545; }
+        .info-box.info { background: #d1ecf1; border-left: 4px solid #17a2b8; }
+        .info-box.success { background: #d4edda; border-left: 4px solid #28a745; }
+        
+        .pricing { background: white; }
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            gap: 40px;
+        }
+        .pricing-card {
+            background: #f8f9fa;
+            border-radius: 25px;
+            padding: 50px 40px;
+        }
+        .pricing-card.featured {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        .price-amount {
+            font-size: 3.5rem;
+            font-weight: 900;
+            color: #e94560;
+            text-align: center;
+            margin: 20px 0;
+        }
+        .pricing-card.featured .price-amount { color: white; }
+        .pricing-features {
+            list-style: none;
+            margin: 30px 0;
+        }
+        .pricing-features li {
+            padding: 14px 0 14px 35px;
+            position: relative;
+        }
+        .pricing-features li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: #2ecc71;
+            font-weight: 900;
+        }
+        .pricing-card.featured .pricing-features li::before { color: white; }
+        .pricing-cta {
+            display: block;
+            text-align: center;
+            background: #1a1a2e;
+            color: white;
+            padding: 20px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 800;
+        }
+        
+        .guide { background: #f8f9fa; }
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+            border-radius: 20px;
+            margin-bottom: 30px;
+        }
+        .video-container video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+        .download-section {
+            text-align: center;
+            padding: 40px;
+            background: white;
+            border-radius: 20px;
+            margin-top: 40px;
+        }
+        .download-btn {
+            display: inline-block;
+            background: #1a1a2e;
+            color: white;
+            padding: 18px 45px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            margin-top: 20px;
+        }
+        
+        .faq { background: white; }
+        .faq-item {
+            background: #f8f9fa;
+            margin-bottom: 20px;
+            border-radius: 15px;
+            overflow: hidden;
+        }
+        .faq-question {
+            padding: 25px 35px;
+            cursor: pointer;
+            font-weight: 700;
+            position: relative;
+        }
+        .faq-question::after {
+            content: '+';
+            position: absolute;
+            right: 35px;
+            font-size: 2rem;
+        }
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease;
+        }
+        .faq-answer-content { padding: 0 35px 25px; }
+        
+        footer {
+            background: #1a1a2e;
+            color: white;
+            padding: 70px 20px 35px;
+        }
+        .footer-content {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 60px;
+            max-width: 1200px;
+            margin: 0 auto 45px;
+        }
+        .footer-links ul { list-style: none; }
+        .footer-links a {
+            color: rgba(255,255,255,0.8);
+            text-decoration: none;
+            display: block;
+            padding: 6px 0;
+        }
+        
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.2rem; }
+            .example-content, .timeline-grid, .pricing-grid, .footer-content { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <section class="hero">
+        <div class="container">
+            <div style="display:inline-block;background:rgba(255,255,255,0.2);padding:10px 25px;border-radius:30px;font-size:0.9rem;margin-bottom:25px;backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,0.3);">✨ AI×プロ編集で実現する、本格テーマソング制作 ✨</div>
+            <h1>あなたの電子書籍に、<br><span class="highlight">世界に一つだけ</span>の「テーマソング」を。</h1>
+            <p style="font-size:1.3rem;margin-bottom:45px;line-height:1.8;">SNSで3倍拡散される音楽の力で、読者の記憶に残る作品へ。<br>最短10日、5万円から。プロ品質のオリジナル楽曲を制作します。</p>
+            <a href="#pricing" class="hero-cta">料金プランを見る →</a>
+            
+            <div style="display:flex;justify-content:center;gap:50px;margin-top:60px;flex-wrap:wrap;">
+                <div style="text-align:center;">
+                    <div style="font-size:2.8rem;font-weight:900;color:#f4a261;line-height:1;margin-bottom:8px;">¥50,000〜</div>
+                    <div style="font-size:0.95rem;opacity:0.9;">明確な料金</div>
+                </div>
+                <div style="text-align:center;">
+                    <div style="font-size:2.8rem;font-weight:900;color:#f4a261;line-height:1;margin-bottom:8px;">最短10日</div>
+                    <div style="font-size:0.95rem;opacity:0.9;">スピード納品</div>
+                </div>
+                <div style="text-align:center;">
+                    <div style="font-size:2.8rem;font-weight:900;color:#f4a261;line-height:1;margin-bottom:8px;">2曲提供</div>
+                    <div style="font-size:0.95rem;opacity:0.9;">選べるデモ</div>
+                </div>
+                <div style="text-align:center;">
+                    <div style="font-size:2.8rem;font-weight:900;color:#f4a261;line-height:1;margin-bottom:8px;">完全譲渡</div>
+                    <div style="font-size:0.95rem;opacity:0.9;">著作権</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="problem">
+        <div class="container">
+            <h2>こんなお悩み、ありませんか？</h2>
+            <div class="problem-grid">
+                <div class="problem-card">
+                    <div class="problem-icon">😰</div>
+                    <h3>投稿が埋もれてしまう</h3>
+                    <p>テキストと表紙画像だけでは、タイムラインを流れていくだけ。</p>
+                </div>
+                <div class="problem-card">
+                    <div class="problem-icon">📱</div>
+                    <h3>動画編集のハードルが高い</h3>
+                    <p>TikTokやリールが効果的なのは分かっている。でも、編集スキルも時間もない。</p>
+                </div>
+                <div class="problem-card">
+                    <div class="problem-icon">💭</div>
+                    <h3>印象に残らない</h3>
+                    <p>書籍の世界観を伝えたいのに、文章だけでは限界がある。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="solution">
+        <div class="container">
+            <h2>「音楽」が、すべてを変えます。</h2>
+            <div class="solution-features">
+                <div class="feature-card">
+                    <div class="feature-icon">🎵</div>
+                    <h3>感情を直接届ける</h3>
+                    <p>音楽は文字を超えた感情伝達手段。</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📈</div>
+                    <h3>SNSで3倍拡散</h3>
+                    <p>動画+音楽は3倍シェアされやすい。</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🌟</div>
+                    <h3>ブランド確立</h3>
+                    <p>「あの曲の本」として記憶される。</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">⚡</div>
+                    <h3>即座に使える</h3>
+                    <p>そのままSNSへ投稿できます。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="examples">
+        <div class="container">
+            <h2>実際の制作例</h2>
+            <div class="example-content">
+                <div class="example-video">
+                    <video controls preload="metadata">
+                        <source src="example_standard.mp4" type="video/mp4">
+                    </video>
+                </div>
+                <div>
+                    <h3 style="font-size:2rem;margin:20px 0;">人生の金メダル<br>Life is a Movie</h3>
+                    <p style="margin:20px 0;">静止画に歌詞キャプションを組み合わせた仕様。費用を抑えつつプロ品質を実現。</p>
+                    <p><strong>価格：</strong>¥50,000（税別）</p>
+                </div>
+            </div>
+            <div class="example-content" style="direction:rtl;">
+                <div class="example-video" style="direction:ltr;">
+                    <video controls preload="metadata">
+                        <source src="example_slide.mp4" type="video/mp4">
+                    </video>
+                </div>
+                <div style="direction:ltr;">
+                    <h3 style="font-size:2rem;margin:20px 0;">人生の金メダル<br>スライド動画版</h3>
+                    <p style="margin:20px 0;">複数枚の静止画を使ったスライド動画。SNSでの拡散力が格段にアップ。</p>
+                    <p><strong>価格：</strong>¥80,000（税別）</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="timeline">
+        <div class="container">
+            <h2>制作タイムラインと納期</h2>
+            <p style="text-align:center;font-size:1.2rem;color:#666;margin-bottom:60px;">お申込みから納品まで、すべてオンラインで完結します</p>
+            <div class="timeline-grid">
+                <div class="timeline-card">
+                    <div class="timeline-icon">📝</div>
+                    <h3 style="margin:15px 0;">契約・入金</h3>
+                    <p style="color:#666;margin:15px 0;">契約書への署名・捺印と料金のお振込</p>
+                    <p style="color:#e94560;font-weight:600;">Start</p>
+                </div>
+                <div class="timeline-card">
+                    <div class="timeline-icon">🎵</div>
+                    <h3 style="margin:15px 0;">初回デモ音源</h3>
+                    <p style="color:#666;margin:15px 0;">2曲のデモ音源を制作</p>
+                    <p style="color:#e94560;font-weight:600;">入金確認から10営業日以内</p>
+                </div>
+                <div class="timeline-card">
+                    <div class="timeline-icon">👁️</div>
+                    <h3 style="margin:15px 0;">修正期間</h3>
+                    <p style="color:#666;margin:15px 0;">デモ音源をご確認</p>
+                    <p style="color:#e94560;font-weight:600;">確認</p>
+                </div>
+                <div class="timeline-card">
+                    <div class="timeline-icon">🔧</div>
+                    <h3 style="margin:15px 0;">修正対応</h3>
+                    <p style="color:#666;margin:15px 0;">ご依頼に応じて修正</p>
+                    <p style="color:#e94560;font-weight:600;">各依頼から3営業日以内</p>
+                </div>
+                <div class="timeline-card">
+                    <div class="timeline-icon">📦</div>
+                    <h3 style="margin:15px 0;">最終納品</h3>
+                    <p style="color:#666;margin:15px 0;">完成した楽曲と付随コンテンツを納品</p>
+                    <p style="color:#e94560;font-weight:600;">初回デモ納品日から30日以内</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="delivery">
+        <div class="container">
+            <div class="delivery-box">
+                <div style="background:rgba(255,255,255,0.2);padding:8px 20px;border-radius:20px;display:inline-block;margin-bottom:20px;">📅 現在の納品時期の目安</div>
+                <div class="delivery-title">お申込みから約2週間</div>
+                <p>※現在の受注状況に基づく目安です。正確な納期は申込後にご案内いたします。</p>
+                <p style="margin-top:15px;opacity:0.8;">最終更新：2026年2月3日</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="chatwork">
+        <div class="container">
+            <h2>連絡手段と指示の記録</h2>
+            <div class="chatwork-box">
+                <div class="chatwork-header">
+                    <div style="font-size:4rem;margin-bottom:20px;">💬</div>
+                    <h3 style="font-size:2rem;margin-bottom:15px;">Chatwork（チャットワーク）</h3>
+                    <p>すべての連絡はChatworkで行います</p>
+                </div>
+                <div class="chatwork-content">
+                    <p style="font-size:1.1rem;font-weight:600;margin-bottom:30px;">すべての連絡（指示、修正依頼、素材提供、納品）はChatworkで行います。</p>
+                    
+                    <div class="info-box warning">
+                        <strong>理由：</strong>契約上の権利義務の根拠となります。
+                    </div>
+                    
+                    <div class="info-box danger">
+                        <strong>✗</strong> 口頭、電話、対面での指示は、文書化されない限り効力を持ちません。
+                    </div>
+                    
+                    <div class="info-box info">
+                        <details>
+                            <summary style="cursor:pointer;font-weight:600;padding:10px 0;font-size:1.1rem;">🔰 Chatworkとは？使い方を見る ▲</summary>
+                            <div style="margin-top:20px;">
+                                <div style="margin-bottom:25px;padding-left:30px;position:relative;">
+                                    <div style="position:absolute;left:0;color:#17a2b8;font-size:1.5rem;">●</div>
+                                    <h4 style="font-size:1.1rem;margin-bottom:10px;color:#1a1a2e;">1. Chatworkアカウントの作成（無料）</h4>
+                                    <p style="line-height:1.9;">Chatwork公式サイト（<a href="https://go.chatwork.com/ja/" target="_blank" style="color:#17a2b8;">https://go.chatwork.com/ja/</a>）にアクセスし、「新規登録（無料）」ボタンからアカウントを作成します。メールアドレスだけで簡単に登録できます。</p>
+                                </div>
+                                <div style="margin-bottom:25px;padding-left:30px;position:relative;">
+                                    <div style="position:absolute;left:0;color:#17a2b8;font-size:1.5rem;">●</div>
+                                    <h4 style="font-size:1.1rem;margin-bottom:10px;color:#1a1a2e;">2. 招待を受ける</h4>
+                                    <p style="line-height:1.9;">ご契約後、登録されたメールアドレス宛にChatworkの招待メールが届きます。メール内の「グループチャットに参加する」ボタンをクリックしてください。</p>
+                                </div>
+                                <div style="margin-bottom:25px;padding-left:30px;position:relative;">
+                                    <div style="position:absolute;left:0;color:#17a2b8;font-size:1.5rem;">●</div>
+                                    <h4 style="font-size:1.1rem;margin-bottom:10px;color:#1a1a2e;">3. メッセージの送信</h4>
+                                    <p style="line-height:1.9;">画面下部のメッセージ入力欄に文章を入力し、「送信」ボタンを押すだけです。LINEと同じような感覚でお使いいただけます。</p>
+                                </div>
+                                <div style="margin-bottom:25px;padding-left:30px;position:relative;">
+                                    <div style="position:absolute;left:0;color:#17a2b8;font-size:1.5rem;">●</div>
+                                    <h4 style="font-size:1.1rem;margin-bottom:10px;color:#1a1a2e;">4. ファイルの送信</h4>
+                                    <p style="line-height:1.9;">書籍の表紙画像などを送る際は、メッセージ入力欄の上にある「📎クリップマーク」をクリックし、ファイルを選択するだけです。</p>
+                                </div>
+                                <div style="margin-bottom:25px;padding-left:30px;position:relative;">
+                                    <div style="position:absolute;left:0;color:#17a2b8;font-size:1.5rem;">●</div>
+                                    <h4 style="font-size:1.1rem;margin-bottom:10px;color:#1a1a2e;">5. スマホアプリの利用</h4>
+                                    <p style="line-height:1.9;">App Store（iPhone）またはGoogle Play（Android）で「Chatwork」と検索してアプリをダウンロードできます。外出先からでも簡単に確認・返信できます。</p>
+                                </div>
+                            </div>
+                        </details>
+                    </div>
+                    
+                    <div class="info-box success">
+                        <strong>💡 ポイント：</strong>Chatworkは完全無料でご利用いただけます。ビジネスチャットツールなので、プライベートのLINEアカウントを教える必要もありません。
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="pricing" id="pricing">
+        <div class="container">
+            <h2>料金プラン</h2>
+            <div class="pricing-grid">
+                <div class="pricing-card">
+                    <h3 style="text-align:center;font-size:1.6rem;margin-bottom:20px;">スタンダード</h3>
+                    <div class="price-amount">¥50,000<span style="font-size:1.3rem;">(税別)</span></div>
+                    <ul class="pricing-features">
+                        <li>オリジナル楽曲制作</li>
+                        <li>静止画 + 歌詞キャプション</li>
+                        <li>初回デモ2曲納品</li>
+                        <li>修正2回まで無料</li>
+                        <li>著作権完全譲渡</li>
+                    </ul>
+                    <a href="https://docs.google.com/forms/d/e/1FAIpQLSc4pHzUsWGuEi-5msaha0DwKh9Q6n1MLyoqMBzGiaPpHAegcQ/viewform" target="_blank" class="pricing-cta">このプランで申し込む</a>
+                </div>
+                <div class="pricing-card featured">
+                    <h3 style="text-align:center;font-size:1.6rem;margin-bottom:20px;">スライド動画</h3>
+                    <div class="price-amount">¥80,000<span style="font-size:1.3rem;">(税別)</span></div>
+                    <ul class="pricing-features">
+                        <li>オリジナル楽曲制作</li>
+                        <li>スライド動画 + 歌詞</li>
+                        <li>初回デモ2曲納品</li>
+                        <li>修正2回まで無料</li>
+                        <li>著作権完全譲渡</li>
+                        <li><strong>SNS最適化</strong></li>
+                    </ul>
+                    <a href="https://docs.google.com/forms/d/e/1FAIpQLSc4pHzUsWGuEi-5msaha0DwKh9Q6n1MLyoqMBzGiaPpHAegcQ/viewform" target="_blank" class="pricing-cta" style="background:white;color:#1a1a2e;">このプランで申し込む</a>
+                </div>
+                <div class="pricing-card">
+                    <h3 style="text-align:center;font-size:1.6rem;margin-bottom:20px;">アップグレード</h3>
+                    <div class="price-amount">+¥50,000<span style="font-size:1.3rem;">(税別)</span></div>
+                    <ul class="pricing-features">
+                        <li>スタンダード後に追加可</li>
+                        <li>静止画→動画へ変更</li>
+                        <li>より動的な表現</li>
+                        <li>拡散力アップ</li>
+                    </ul>
+                    <a href="https://docs.google.com/forms/d/e/1FAIpQLSc4pHzUsWGuEi-5msaha0DwKh9Q6n1MLyoqMBzGiaPpHAegcQ/viewform" target="_blank" class="pricing-cta">お問い合わせ</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="guide">
+        <div class="container">
+            <h2>サービスの全体像</h2>
+            <div class="video-container">
+                <video controls preload="metadata">
+                    <source src="service_guide.mp4" type="video/mp4">
+                </video>
+            </div>
+            <div class="download-section">
+                <div style="font-size:3rem;margin-bottom:20px;">📄</div>
+                <h3>電子書籍テーマソング制作委託契約書</h3>
+                <p>お申込み前に、契約内容を詳しくご確認いただけます。</p>
+                <a href="contract.pdf" download="電子書籍テーマソング制作委託契約書.pdf" class="download-btn" style="text-decoration:none;">📥 契約書をダウンロード（PDF）</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="faq">
+        <div class="container">
+            <h2>よくあるご質問</h2>
+            <div style="max-width:900px;margin:0 auto;">
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">本当にAIで作った音楽で大丈夫ですか？</div>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">はい、問題ありません。AI技術により高品質な楽曲制作が可能です。ただし、AI生成物の性質上、完全な著作権保護を保証することはできません。</div>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">デモ音源が気に入らない場合は？</div>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">初回デモでは2曲をご提供。修正は2回まで無料対応いたします。初回デモ納品前であれば全額返金も可能です。</div>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">納品後に自由に使えますか？</div>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">はい、料金完済後、著作権はお客様に完全譲渡されます。自由に使用、改変、複製、配布が可能です。</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-about">
+                <h3>電子書籍テーマソング制作サービス</h3>
+                <p>AI技術を活用し、世界に一つだけのオリジナルテーマソングを制作。</p>
+                <p style="margin-top:18px;"><strong>受託者：</strong>新井健司<br><strong>住所：</strong>〒369-1216 埼玉県大里郡寄居町富田656</p>
+            </div>
+            <div class="footer-links">
+                <h4>サービス</h4>
+                <ul>
+                    <li><a href="#pricing">料金プラン</a></li>
+                    <li><a href="contract.pdf" download="電子書籍テーマソング制作委託契約書.pdf">契約書ダウンロード（PDF）</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <h4>お問い合わせ</h4>
+                <ul>
+                    <li><a href="https://docs.google.com/forms/d/e/1FAIpQLSc4pHzUsWGuEi-5msaha0DwKh9Q6n1MLyoqMBzGiaPpHAegcQ/viewform" target="_blank">申込フォーム</a></li>
+                </ul>
+            </div>
+        </div>
+        <div style="text-align:center;padding-top:35px;border-top:1px solid rgba(255,255,255,0.1);opacity:0.7;">
+            <p>&copy; 2025 電子書籍テーマソング制作サービス（新井健司）</p>
+        </div>
+    </footer>
+
+    <script>
+        function toggleFAQ(element) {
+            element.classList.toggle('active');
+            const answer = element.nextElementSibling;
+            if (answer.style.maxHeight) {
+                answer.style.maxHeight = null;
+            } else {
+                answer.style.maxHeight = answer.scrollHeight + 'px';
+            }
+        }
+        
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+</html>
